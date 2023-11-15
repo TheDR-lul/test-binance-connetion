@@ -50,6 +50,7 @@ async def save_trade_data(trade):
     except Exception as e:
         logging.error(f"Ошибка при сохранении данных о сделке: {e}")
 
+
 # Функция для чтения API-ключей из файла
 
 def read_api_keys(filename='api_keys.txt'):
@@ -160,15 +161,13 @@ async def main():
     rsi_overbought = int(strategy.get('rsi_overbought', 70))
     rsi_oversold = int(strategy.get('rsi_oversold', 30))
 
+
     # Установка параметров RSI
     logging.info(f"RSI Period: {rsi_period}, Overbought: {rsi_overbought}, Oversold: {rsi_oversold}")
 
     rsi_period = int(strategy.get('rsi_period', 14))
     rsi_overbought = int(strategy.get('rsi_overbought', 70))
     rsi_oversold = int(strategy.get('rsi_oversold', 30))
-
-    # Установка параметров RSI
-    logging.info(f"RSI Period: {rsi_period}, Overbought: {rsi_overbought}, Oversold: {rsi_oversold}")
 
     # Чтение параметров стратегии
     async def main():
@@ -184,7 +183,7 @@ async def main():
 
     asyncio.run(main())
 # Загрузка стратегии из файла
-strategy = await read_strategy()
+strategy = read_strategy()
 rsi_period = strategy.get('rsi_period', default_rsi_period)
 
 # Определение переменной "strategy"
@@ -552,4 +551,3 @@ if __name__ == "__main__":
         logging.info('Программа прервана.')
     finally:
         loop.run_until_complete(close_binance_async())
-        
