@@ -163,7 +163,26 @@ async def main():
     # Установка параметров RSI
     logging.info(f"RSI Period: {rsi_period}, Overbought: {rsi_overbought}, Oversold: {rsi_oversold}")
 
-asyncio.run(main())
+    rsi_period = int(strategy.get('rsi_period', 14))
+    rsi_overbought = int(strategy.get('rsi_overbought', 70))
+    rsi_oversold = int(strategy.get('rsi_oversold', 30))
+
+    # Установка параметров RSI
+    logging.info(f"RSI Period: {rsi_period}, Overbought: {rsi_overbought}, Oversold: {rsi_oversold}")
+
+    # Чтение параметров стратегии
+    async def main():
+        strategy = await read_strategy()
+
+        # Извлечение параметров RSI из стратегии
+        rsi_period = int(strategy.get('rsi_period', 14))
+        rsi_overbought = int(strategy.get('rsi_overbought', 70))
+        rsi_oversold = int(strategy.get('rsi_oversold', 30))
+
+        # Установка параметров RSI
+        logging.info(f"RSI Period: {rsi_period}, Overbought: {rsi_overbought}, Oversold: {rsi_oversold}")
+
+    asyncio.run(main())
 # Загрузка стратегии из файла
 strategy = await read_strategy()
 rsi_period = strategy.get('rsi_period', default_rsi_period)
