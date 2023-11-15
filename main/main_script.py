@@ -8,13 +8,14 @@ import os
 
 # Добавляем текущий каталог в sys.path
 current_dir = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(os.path.join(current_dir, 'main'))
+modules_path = os.path.join(current_dir, 'modules')
+sys.path.append(modules_path)
 
 # Импорт модулей
-from binance_module import BinanceModule
-from trading_strategy import TradingStrategy
-from trade_metrics import calculate_trade_metrics
-from trade_statistics import calculate_and_export_statistics_after_sell, save_trade_data
+from modules.binance_module import BinanceModule
+from modules.trading_strategy import TradingStrategy
+from modules.trade_metrics import calculate_trade_metrics
+from modules.trade_statistics import calculate_and_export_statistics_after_sell, save_trade_data
 
 # Глобальные переменные
 active_pairs = set()
