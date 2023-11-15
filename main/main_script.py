@@ -4,11 +4,7 @@ import logging
 import sys
 from datetime import datetime
 
-import ccxt
 import talib
-
-# Пути к модулям
-sys.path.append('./modules')
 
 # Импорт модулей
 from binance_module import BinanceModule
@@ -21,7 +17,7 @@ active_pairs = set()
 current_trades = {}
 leverage = 20  # Плечо для сделок
 active_pairs_count = 0
-white_list = ['BTC/USDT', 'ETH/USDT']  # Ваш список торговых пар
+white_list = ['BTCUSDT', 'ETHUSDT']  # Ваш список торговых пар
 
 # Инициализация объектов модулей
 binance = BinanceModule()
@@ -56,9 +52,8 @@ async def on_kline(message):
 
     except Exception as e:
         logging.info(f"Ошибка в обработке свечи: {e}")
-
-async def check_trade_conditions(symbol, close_price, rsi):
-    global active_pairs_count
+    async def check_trade_conditions(symbol, close_price, rsi):
+     global active_pairs_count
 
     try:
         if symbol not in current_trades and rsi < rsi_oversold:
@@ -68,6 +63,11 @@ async def check_trade_conditions(symbol, close_price, rsi):
             await close_trade(symbol)
     except Exception as e:
         logging.info(f"Ошибка при проверке условий для сделки: {e}")
+
+
+
+
+
 
 async def execute_buy_order(symbol, close_price, rsi):
     try:
@@ -87,11 +87,10 @@ async def execute_buy_order(symbol, close_price, rsi):
     except Exception as e:
         logging.info(f"Ошибка при выполнении покупки: {e}")
         await close_trade(symbol)
-
 async def close_trade(symbol):
     try:
         trade = current_trades[symbol]
-        close_price = binance.fetch_ticker_price(symbol)
+        close_price = await binance.fetch_ticker_price(symbol)
         trade['exit_time'] = datetime.now().strftime('%d,%m %H:%M:%S')
         trade['exit_price'] = close_price
         trade['rsi_exit'] = await calculate_rsi(symbol, close_price)
@@ -188,4 +187,3 @@ if __name__ == "__main__":
         logging.info('Программа прервана.')
     finally:
         loop.run_until_complete(binance.close_binance_async())
-
