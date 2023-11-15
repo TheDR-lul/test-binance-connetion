@@ -536,7 +536,6 @@ async def main():
     finally:
         await close_binance_async()
 
-
 # Запуск программы
 if __name__ == "__main__":
     try:
@@ -553,3 +552,4 @@ if __name__ == "__main__":
         logging.info('Программа прервана.')
     finally:
         loop.run_until_complete(close_binance_async())
+        
