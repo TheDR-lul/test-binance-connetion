@@ -3,8 +3,12 @@ import json
 import logging
 import sys
 from datetime import datetime
-
 import talib
+import os
+
+# Добавляем текущий каталог в sys.path
+current_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.join(current_dir, 'main'))
 
 # Импорт модулей
 from binance_module import BinanceModule
