@@ -184,6 +184,7 @@ async def main():
     asyncio.run(main())
 # Загрузка стратегии из файла
 strategy = read_strategy()
+default_rsi_period = 14  # Замените 14 на значение по умолчанию или другое, которое вы хотите использовать
 rsi_period = strategy.get('rsi_period', default_rsi_period)
 
 # Определение переменной "strategy"
